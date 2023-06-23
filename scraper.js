@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-const getPrice = async () => {
+const getPrice = async (url) => {
   const browser = await puppeteer.launch({
     headless: false,
     defaultViewport: null,
@@ -8,22 +8,19 @@ const getPrice = async () => {
 
   const page = await browser.newPage();
 
-  await page.goto(
-    "https://www.lazada.com.ph/products/pre-order-twice-official-light-stick-candybong-infinity-ver3-i3663120116-s19174945122.html?",
-    {
-      waitUntil: "networkidle2",
-    }
-  );
+  await page.goto(url, {
+    waitUntil: "networkidle2",
+  });
 
   const price = await page.evaluate(() => {
     const price = document.querySelector(".pdp-price_type_normal").innerText;
 
-    return { price };
+    return { price, message: "wow" };
   });
 
   console.log(price);
-  await browser.close();
+  page.close();
   return price;
 };
 
-const itemPrice = getPrice();
+export { getPrice };
