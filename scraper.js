@@ -2,7 +2,6 @@ import puppeteer from "puppeteer";
 
 const getPrice = async (url) => {
   const browser = await puppeteer.launch({
-    headless: false,
     defaultViewport: null,
   });
 
