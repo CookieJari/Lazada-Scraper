@@ -14,7 +14,7 @@ const getPrice = async (url) => {
   const price = await page.evaluate(() => {
     const price = document.querySelector(".pdp-price_type_normal").innerText;
 
-    return { price, message: "wow" };
+    return { price };
   });
 
   console.log(price);
