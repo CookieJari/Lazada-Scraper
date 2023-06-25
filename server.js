@@ -13,27 +13,21 @@ app.listen(PORT, () =>
 );
 
 app.get("/track", async (req, res) => {
-  res.status(200).send(await getResponse(req));
+  console.log("get: " + req.body);
+  res.status(200).send({ hello: "wow" });
 });
 
-app.post("/tshirt/:id", (req, res) => {
-  //"/tshirt/:id" FOR THIS
-  //const { id } = req.params;
-  //const { logo } = req.body;
-
-  if (!logo) {
+app.post("/track", async (req, res) => {
+  console.log("post: " + req.body);
+  if (!req.body.url) {
     res.status(418).send({ message: "WE NEED A LOGO DAMN!" });
-  } else
-    res.send({
-      tshirt: `Shirt with your ${logo} and an ID of ${id}`,
-    });
+  } else res.send(await getResponse(req));
 });
 
+//this function gets the item price
 const getResponse = async (req) => {
   var url = req.body.url;
-  console.log("url: " + url);
   var resp = await getPrice(url);
-  //  var resp = { price: "3200" };
   var itemPrice = resp.price;
   console.log("RESPONSE:");
   console.log(resp);
