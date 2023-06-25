@@ -5,12 +5,14 @@ import { getPrice } from "./scraper.js";
 const express = require("express");
 const app = express();
 const PORT = 8080;
+const WEB_SERVER = '0.0.0.0';
 
 app.use(express.json());
 
-app.listen(PORT, () =>
-  console.log(`Server is ACTIVE on http://localhost:${PORT}`)
+app.listen(PORT, WEB_SERVER, () =>
+  console.log(`Server is ACTIVE on http://${WEB_SERVER}:${PORT}`)
 );
+
 
 app.get("/track", async (req, res) => {
   console.log("get: " + req.body);

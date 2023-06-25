@@ -2,7 +2,11 @@ import puppeteer from "puppeteer";
 
 const getPrice = async (url) => {
   const browser = await puppeteer.launch({
+    //Dito lalagay yung path ng browser
+    executablePath:'/snap/bin/chromium',
     defaultViewport: null,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+
   });
 
   const page = await browser.newPage();
