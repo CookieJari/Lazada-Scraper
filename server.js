@@ -10,7 +10,7 @@ const cors = require("cors");
 
 
 app.use(express.json());
-app.use(cors({ origin: "null" })); // Allow requests from the "null" origin
+app.use(cors({ origin: "*" })); // Allow requests from the "null" origin
 
 
 // API URL
