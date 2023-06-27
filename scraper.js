@@ -14,12 +14,19 @@ const getPrice = async (url) => {
   await page.goto(url, {
     waitUntil: "networkidle2",
   });
-
-  const price = await page.evaluate(() => {
-    const price = document.querySelector(".pdp-price_type_normal").innerText;
-
-    return { price };
-  });
+  
+  try {
+    const price = await page.evaluate(() => {
+      const price = document.querySelector(".pdp-price_type_normal").innerText;
+  
+      return { price };
+    });
+  } catch (error) {
+    console.error("FAILED FINDING THE PRICE");
+    const price = {price:"FAILED"};
+    return price;
+  }
+  
 
   console.log(price);
   page.close();
