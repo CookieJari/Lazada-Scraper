@@ -15,9 +15,14 @@ const getPrice = async (url) => {
   });
 
   const price = await page.evaluate(() => {
-    const price = document.querySelector(".pdp-price_type_normal").innerText;
+    try {
+      const price = document.querySelector(".pdp-price_type_normal").innerText;
 
     return { price };
+    } catch (error) {
+      return{price:"FAIL: "+error}
+    }
+    
   });
 
   console.log(price);
