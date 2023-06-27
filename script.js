@@ -5,7 +5,8 @@ const id = document.querySelector(".id");
 // api.pricelaz.asherl.com:8080/track
 
 //API WEBSITE
-track = "http://localhost:8080/track";
+//Change this whenever ngrok changes
+track = "https://6911-112-209-205-40.ngrok-free.app/track";
 // ITEM TO TRACK URL
 url =
   "https://www.lazada.com.ph/products/ndonhand-twice-official-candyfan-z-i3047510590-s15018676998.html?&search=pdp_v2v?spm=a2o4l.pdp_revamp.recommendation_2.12.71884faaCGWoQM&mp=1&scm=1007.16389.286994.0&clickTrackInfo=53d43af7-418e-4f4b-a8e4-7c8863a99112__3047510590__5509__trigger2i__287002__0.076__0.076__0.0__0.0__0.0__0.076__11__null__null__null__null__null__null____3767.0__0.0__0.0__0__3767.0__255084,255127,255313__null__null__null__3650.16544_955.3632__null__32104__null__0.0__0.0________null__null__0";
@@ -19,7 +20,9 @@ async function getPrice(urlAPI, itemURL) {
   resp = await fetch(urlAPI, {
     method: "POST",
     headers: {
+      // we have this ngrok skip warning so we wont catch the warning page
       "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": true,
     },
     body: JSON.stringify({ message: "wow", url: itemURL }),
   });
@@ -37,7 +40,12 @@ async function changeDOM() {
 }
 
 async function getMsg(urlAPI) {
-  resp = await fetch(urlAPI);
+  resp = await fetch(urlAPI, {
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": true,
+    },
+  });
   const data = await resp.json();
   return data;
 }
@@ -45,7 +53,7 @@ async function getMsg(urlAPI) {
 async function changeDOMTest() {
   var obj = await getMsg(track);
   console.log(obj);
-  userBlock.textContent = obj.hello;
+  userBlock.textContent = obj.message;
 }
 
 async function testGit() {

@@ -5,6 +5,9 @@ import { getPrice } from "./local-scraper.js";
 const express = require("express");
 const app = express();
 const PORT = 8080;
+const cors = require("cors");
+
+app.use(cors({ origin: "*" })); // Allow requests from the "null" origin
 
 app.use(express.json());
 app.listen(PORT, () => console.log(`Server is up on http://localhost:${PORT}`));
