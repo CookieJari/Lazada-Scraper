@@ -6,8 +6,12 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const WEB_SERVER = "0.0.0.0";
+const cors = require("cors");
+
 
 app.use(express.json());
+app.use(cors({ origin: "*" })); // Allow requests from the "null" origin
+
 
 // API URL
 // api.pricelaz.asherl.com:8080/track
