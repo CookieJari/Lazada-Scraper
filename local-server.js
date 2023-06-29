@@ -29,7 +29,8 @@ const getResponse = async (req) => {
   var url = req.body.url;
   var resp = await getPrice(url);
   var itemPrice = resp.price;
+  var itemImage = resp.image;
   console.log("RESPONSE:");
   console.log(resp);
-  return { price: itemPrice, date: Date() };
+  return { price: itemPrice, date: Date(), image: itemImage };
 };
