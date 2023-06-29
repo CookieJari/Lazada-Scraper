@@ -6,11 +6,10 @@ const id = document.querySelector(".id");
 
 //API WEBSITE
 //Change this whenever ngrok changes
-track = "https://6911-112-209-205-40.ngrok-free.app/track";
+track = "http://localhost:8080/track";
 // ITEM TO TRACK URL
 url =
-  "https://www.lazada.com.ph/products/ndonhand-twice-official-candyfan-z-i3047510590-s15018676998.html?&search=pdp_v2v?spm=a2o4l.pdp_revamp.recommendation_2.12.71884faaCGWoQM&mp=1&scm=1007.16389.286994.0&clickTrackInfo=53d43af7-418e-4f4b-a8e4-7c8863a99112__3047510590__5509__trigger2i__287002__0.076__0.076__0.0__0.0__0.0__0.076__11__null__null__null__null__null__null____3767.0__0.0__0.0__0__3767.0__255084,255127,255313__null__null__null__3650.16544_955.3632__null__32104__null__0.0__0.0________null__null__0";
-
+  "https://www.lazada.com.ph/products/alfa43k-60cm-free-standing-oven-54l-capacity-fan-assisted-i2111841001-s9428532224.html?spm=a2o4l.10450891.0.0.1cd66b2dfR8qx9&search=store&mp=3";
 // GITHUB API FOR TEST
 testApi = "https://api.github.com/users/cookiejari";
 //WE USE POST SO WE CAN PUT A BODY
@@ -67,4 +66,4 @@ async function testGit() {
 //changeDOMTest();
 
 // REAL FUNCTION ONE
-//changeDOM();
+changeDOM();

@@ -7,7 +7,7 @@ const app = express();
 const PORT = 8080;
 const cors = require("cors");
 
-app.use(cors({ origin: "*" })); // Allow requests from the "null" origin
+app.use(cors({ origin: "*", methods: ["GET", "POST"] })); // Allow requests from the "null" origin
 
 app.use(express.json());
 app.listen(PORT, () => console.log(`Server is up on http://localhost:${PORT}`));
