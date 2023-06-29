@@ -12,15 +12,16 @@ const getPrice = async (url) => {
     waitUntil: "networkidle2",
   });
 
-  const price = await page.evaluate(() => {
+  const item = await page.evaluate(() => {
     const price = document.querySelector(".pdp-price_type_normal").innerText;
+    const image = document.querySelector(".gallery-preview-panel__image").src;
 
-    return { price };
+    return { price, image };
   });
 
-  console.log(price);
+  console.log(item);
   page.close();
-  return price;
+  return item;
 };
 
 export { getPrice };

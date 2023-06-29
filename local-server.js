@@ -7,7 +7,7 @@ const app = express();
 const PORT = 8080;
 const cors = require("cors");
 
-app.use(cors({ origin: "*" })); // Allow requests from the "null" origin
+app.use(cors({ origin: "*", methods: ["GET", "POST"] })); // Allow requests from the "null" origin
 
 app.use(express.json());
 app.listen(PORT, () => console.log(`Server is up on http://localhost:${PORT}`));
@@ -29,7 +29,8 @@ const getResponse = async (req) => {
   var url = req.body.url;
   var resp = await getPrice(url);
   var itemPrice = resp.price;
+  var itemImage = resp.image;
   console.log("RESPONSE:");
   console.log(resp);
-  return { price: itemPrice, date: Date() };
+  return { price: itemPrice, date: Date(), image: itemImage };
 };
