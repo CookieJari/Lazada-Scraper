@@ -2,6 +2,8 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 import { getPrice } from "./local-scraper.js";
 
+import { SendMail } from "./email-demo.js";
+
 const express = require("express");
 const app = express();
 const PORT = 8080;
@@ -26,25 +28,51 @@ app.post("/track", async (req, res) => {
 
 // REMINDER {price:"0",image:"missing"} means failed scrape attempt
 
-// create item
+// CREATE ITEM
 //scrape for initial price
+app.post("/create", async (req, res) => {
+  console.log("post: " + req.body);
+  if (!req.body.url) {
+    res.status(418).send({ message: "URL missing!" });
+  } else {
+    let trackedItem = await getResponse(req);
+    //put trackedItem in database
+    res.send(trackedItem);
+  }
+});
 
-// update items (scrape all and update)
-//  check for new price and send notif
+// UPDATE ITEM (scrape all and update)
 
-// get list of items
+app.get("/update", async (req, res) => {
+  console.log("get: " + req.body);
+  //put code to get list of items here
+  // get list of items
+  //let itemList  =
 
-//get history of items
+  //loop through itemList and scrape each item
+  //  check for new price and send notif
+  res.status(200).send({ message: "wow" });
+});
 
-// delete
+// GET ITEM HISTORY
+
+// DELETE ITEM
 
 //this function gets the item price
 const getResponse = async (req) => {
-  var url = req.body.url;
-  var resp = await getPrice(url);
-  var itemPrice = resp.price;
-  var itemImage = resp.image;
+  let url = req.body.url;
+  let resp = await getPrice(url);
+  let itemPrice = resp.price;
+  let itemImage = resp.image;
   console.log("RESPONSE:");
   console.log(resp);
-  return { price: itemPrice, date: Date(), image: itemImage };
+  const date = new Date();
+  // calling a constructor, can use other methods to extract info from returned value
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let fullDate = `${month}-${day}-${year}`;
+
+  console.log(fullDate);
+  return { price: itemPrice, date: fullDate, image: itemImage };
 };

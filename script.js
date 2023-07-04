@@ -7,10 +7,10 @@ const img = document.querySelector(".item-image");
 
 //API WEBSITE
 //Change this whenever ngrok changes
-track = "https://fc2c-112-209-221-10.ngrok-free.app/track";
+track = "https://7e4f-112-209-226-141.ngrok-free.app/track";
 // ITEM TO TRACK URL
 url =
-  "https://www.lazada.com.ph/products/bcc02tpmeu-bean-to-cup-coffee-machine-with-steam-wand-taupe-i3431186095-s17588624992.html?c=&channelLpJumpArgs=&clickTrackInfo=query%253A%253Bnid%253A3431186095%253Bsrc%253AlazadaInShopSrp%253Brn%253A6283b6347fd01b6b682bb2973b780415%253Bregion%253Aph%253Bsku%253A3431186095_PH%253Bprice%253A51995%253Bclient%253Adesktop%253Bsupplier_id%253A100122871%253Bpromotion_biz%253A%253Basc_category_id%253A22336%253Bitem_id%253A3431186095%253Bsku_id%253A17588624992%253Bshop_id%253A135766&fastshipping=0&freeshipping=1&fs_ab=2&fuse_fs=1&lang=en&location=Metro%20Manila&price=51995&priceCompare=&ratingscore=5.0&request_id=6283b6347fd01b6b682bb2973b780415&review=2&sale=3&search=1&source=search&spm=a2o4l.store_product.list.i77.3ca6c862leUka5&stock=1";
+  "https://www.lazada.com.ph/products/tulip-pork-luncheon-meat-340g-i567226158-s1542274263.html?spm=a2o4l.home.just4u.22.206dca18Xm2gCa&&scm=1007.17519.162103.0&pvid=059e2e41-6887-41ea-95e5-5142637e219c&search=0&clickTrackInfo=pvid%3A059e2e41-6887-41ea-95e5-5142637e219c%3Bchannel_id%3A0000%3Bmt%3Ahot%3Bitem_id%3A567226158%3Bself_ab_id%3A162103%3Bself_app_id%3A7519%3Blayer_buckets%3A955.3629_5437.25236_955.3631_6059.28889%3Bpos%3A22%3B";
 // GITHUB API FOR TEST
 testApi = "https://api.github.com/users/cookiejari";
 //WE USE POST SO WE CAN PUT A BODY
