@@ -24,6 +24,20 @@ app.post("/track", async (req, res) => {
   } else res.send(await getResponse(req));
 });
 
+// REMINDER {price:"0",image:"missing"} means failed scrape attempt
+
+// create item
+//scrape for initial price
+
+// update items (scrape all and update)
+//  check for new price and send notif
+
+// get list of items
+
+//get history of items
+
+// delete
+
 //this function gets the item price
 const getResponse = async (req) => {
   var url = req.body.url;

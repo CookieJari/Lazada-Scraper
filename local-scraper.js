@@ -13,10 +13,15 @@ const getPrice = async (url) => {
   });
 
   const item = await page.evaluate(() => {
-    const price = document.querySelector(".pdp-price_type_normal").innerText;
-    const image = document.querySelector(".gallery-preview-panel__image").src;
+    try {
+      const price = document.querySelector(".pdp-price_type_normal").innerText;
+      const image = document.querySelector(".gallery-preview-panel__image").src;
 
-    return { price, image };
+      return { price, image };
+    } catch (error) {
+      console.log(error);
+      return { price: "0", image: "missing" };
+    }
   });
 
   console.log(item);

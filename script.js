@@ -69,4 +69,4 @@ async function testGit() {
 //changeDOMTest();
 
 // REAL FUNCTION ONE
-//changeDOM();
+changeDOM();
