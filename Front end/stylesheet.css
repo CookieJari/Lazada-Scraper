@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+body {
+  margin: 0px;
+  font-family: "Roboto";
+  box-sizing: border-box;
+  height: 100vh;
+}
+.container {
+  height: 100%;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #fffbf2;
+  font-size: 40px;
+}
+
+.body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.logo {
+  flex: 1.5;
+  text-align: center;
+}
+
+.letter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: 100%;
+}
+.inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+}
+
+input {
+  width: 75%;
+  height: 2em;
+  font-size: 16px;
+}
+input::placeholder {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.603);
+}
+::-webkit-input-placeholder {
+  /* Edge */
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.603);
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.603);
+}
+
+::placeholder {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.603);
+}
+
+a {
+  width: 0%;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5em;
+  width: 100%;
+}
+
+.button {
+  width: 50%;
+}
+button {
+  width: 100%;
+  height: 1.7em;
+  font-size: 0.5em;
+  font-weight: 600;
+  border-radius: 200px;
+  background-color: #d9a089;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #c07262;
+}
+button:hover {
+  background-color: #4fb384;
+}
+
+button:active {
+  background-color: #8d6454;
+}
