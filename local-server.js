@@ -40,14 +40,27 @@ app.post("/create", async (req, res) => {
   } else {
     //THIS IS LOGIC FOR CREATE ITEM
 
-    let trackedItem = await getResponse(req);
-    console.log(trackedItem);
+    //check if item is already in db
+    let sqlUrl = "http://146.190.85.152:3000/products/historical_prices";
+    const itemHistory = await sendItem(sqlUrl, req.body);
+    console.log(itemHistory);
+    //let latest = itemHistory[0].product_url
 
+    //scrape the item
+    /*
+      let trackedItem = await getResponse(req);
+      console.log(trackedItem);
+    */
+
+    //send item to database
+    /*
     let sqlUrl = "http://146.190.85.152:3000/products";
     let response = await sendItem(sqlUrl, trackedItem);
     console.log("sending item");
+    */
+
     //put trackedItem in database
-    res.send(response);
+    //res.send(response);
   }
 });
 
@@ -133,16 +146,6 @@ const getResponse = async (req) => {
     let itemImage = resp.image;
     console.log("RESPONSE:");
     console.log(resp);
-
-    /* GET DATE()
-  const date = new Date();
-  // calling a constructor, can use other methods to extract info from returned value
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-  let fullDate = `${month}-${day}-${year}`;
-  console.log(fullDate);
-*/
 
     return {
       product_name: itemName,
