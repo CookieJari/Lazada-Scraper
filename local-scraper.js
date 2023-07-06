@@ -2,6 +2,8 @@ import puppeteer from "puppeteer";
 
 const getPrice = async (url) => {
   const browser = await puppeteer.launch({
+    //true for no browser. False for show browser
+    headless: false,
     //Dito lalagay yung path ng browser
     defaultViewport: null,
   });
@@ -25,7 +27,7 @@ const getPrice = async (url) => {
   });
 
   console.log(item);
-  page.close();
+  //page.close();
   return item;
 };
 
