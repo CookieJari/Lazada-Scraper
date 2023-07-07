@@ -60,9 +60,7 @@ async function GetHistory() {
     ).style.backgroundImage = `url(${historyList[i].product_image})`;
 
     //href a
-    newItem.querySelector(
-      ".link-to-item"
-    ).href = `item-history.html?${historyList[i].product_url}`;
+    newItem.querySelector(".link-to-item").href = queryString;
 
     //add the newly created div to the grid
     grid.appendChild(newItem);

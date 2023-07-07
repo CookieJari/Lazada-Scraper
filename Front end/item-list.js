@@ -33,9 +33,14 @@ async function UpdateList() {
     ).innerText = `${itemList[i].product_price}`;
 
     //previous price
-    newItem.querySelector(
-      "div span.prev-price"
-    ).innerText = `${itemList[i].previous_price}`;
+    let prevPrice = itemList[i].previous_price;
+    if (prevPrice === null) {
+      newItem.querySelector("div span.prev-price").innerText = `none`;
+    } else {
+      newItem.querySelector(
+        "div span.prev-price"
+      ).innerText = `${itemList[i].previous_price}`;
+    }
 
     //image
     newItem.querySelector(
@@ -48,7 +53,7 @@ async function UpdateList() {
     ).href = `item-history.html?${itemList[i].product_url}`;
 
     let curPrice = Number(itemList[i].previous_price);
-    let prevPrice = Number(itemList[i].previous_price);
+    prevPrice = Number(itemList[i].previous_price);
     if (curPrice === null || prevPrice === 0) {
     } else if ((curPrice) => prevPrice) {
       newItem.querySelector(".price span.price").classList.add("pricesg");
