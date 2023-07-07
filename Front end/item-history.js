@@ -1,6 +1,6 @@
 const grid = document.querySelectorAll(".main-grid")[0];
 const item = document.querySelectorAll(".containers")[0];
-const apiUrl = "http://localhost:8080/list";
+const apiUrl = "https://bb64-112-209-226-141.ngrok-free.app/list";
 
 console.log(grid);
 console.log(item);
@@ -19,7 +19,7 @@ async function GetHistory() {
 
   console.log(historyList);
 
-  for (let i = 0; i < historyList.length; i++) {
+  for (let i = historyList.length - 1; (i) => 0; i--) {
     //clone da item
     console.log(historyList[i]);
     let newItem = item.cloneNode(true);
@@ -31,14 +31,21 @@ async function GetHistory() {
 
     //price
 
-    let price = historyList[i].product_price;
+    let price = Number(historyList[i].product_price);
 
     newItem.querySelector(".price span.price").innerText = price;
     // for previous price colors
     if (i > 0) {
+      let previousPrice = Number(historyList[i - 1].product_price);
       console.log(i);
-      let previousPrice = historyList[i - 1].product_price;
-      console.log(previousPrice);
+      console.log(`${typeof previousPrice}prev:  + ${previousPrice}`);
+      console.log(`${typeof price}prev:  + ${price}`);
+      console.log("red" + previousPrice < price);
+      if (previousPrice < price) {
+        newItem.querySelector(".price span.price").classList.add("pricesr");
+      } else {
+        newItem.querySelector(".price span.price").classList.add("pricesg");
+      }
     }
 
     //date
@@ -71,7 +78,7 @@ async function sendItem(apiUrl, item) {
       "Content-Type": "application/json",
       //REMINDER! Do not use this when not using ngrok servers
       //Will result in CORS when using mobile devices
-      //"ngrok-skip-browser-warning": true,
+      "ngrok-skip-browser-warning": true,
     },
     body: JSON.stringify(item),
   });

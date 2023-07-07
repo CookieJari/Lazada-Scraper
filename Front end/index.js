@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:8080/create";
+const apiUrl = "https://bb64-112-209-226-141.ngrok-free.appcreate";
 testApi = "https://api.github.com/users/cookiejari";
 
 var sub = document.getElementById("sub");

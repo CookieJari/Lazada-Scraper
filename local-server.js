@@ -61,23 +61,33 @@ app.post("/create", async (req, res) => {
       console.log(itemHistory);
       console.log("item is NOT yet tracked");
       // Scrape new item
-      let trackedItem = await ScrapeItem(result, req.body.name);
-      if ("message" in itemHistory) {
-        SendMail(
-          `Tracking for: ${req.body.name} has FAILED`,
-          `The item ${req.body.name} does not have a valid Lazada URL. This is the URL that was sent: ${result}`
-        );
+      let trackedItem;
+      try {
+        trackedItem = await ScrapeItem(result, req.body.name);
+      } catch (error) {}
+      console.log(trackedItem);
+      //check if tracking failed or something
+      if (trackedItem === null || trackedItem === undefined) {
+        console.log("Failed tracking");
         res.send({ message: "Item creation failed" });
       } else {
-        let createUrl = "http://146.190.85.152:3000/products";
-        // Put New Item in DB
-        let response = await sendItem(createUrl, trackedItem);
-        SendMail(
-          `Price change for: ${req.body.name}`,
-          `The price for the ${req.body.name} is PHP ${trackedItem.product_price}. Here is the URL to the item: ${result}`
-        );
-        console.log("Item creation happening");
-        res.send({ message: "Item created" });
+        if ("message" in itemHistory) {
+          SendMail(
+            `Tracking for: ${req.body.name} has FAILED`,
+            `The item ${req.body.name} does not have a valid Lazada URL or the app has been spotted by the Lazada Police 🚨. This is the URL that was sent: ${result}`
+          );
+          res.send({ message: "Item creation failed" });
+        } else {
+          let createUrl = "http://146.190.85.152:3000/products";
+          // Put New Item in DB
+          let response = await sendItem(createUrl, trackedItem);
+          SendMail(
+            `Price change for: ${req.body.name}`,
+            `The price for the ${req.body.name} is PHP ${trackedItem.product_price}. Here is the URL to the item: ${result}`
+          );
+          console.log("Item creation happening");
+          res.send({ message: "Item created" });
+        }
       }
     }
     //IF ITEM EXISTS
@@ -101,8 +111,8 @@ app.post("/create", async (req, res) => {
         let response = await sendItem(createUrl, trackedItem);
         console.log("sending item");
         SendMail(
-          `Price change for: ${name}`,
-          `The price for the ${name} has changed it's price to: PHP${scrapedPrice} from a previous price of: PHP${previousPrice}. Here is the link tot he item: ${url}`
+          `Price change for: ${req.body.name}`,
+          `The price for the ${req.body.name} is PHP ${trackedItem.product_price}. Here is the URL to the item: ${result}`
         );
         res.send({ message: "Item updated" });
       }
@@ -197,7 +207,7 @@ const ScrapeItem = async (url, itemName) => {
 // ------ SCRAPE EVERY X MINS ------
 //This is 5 mins
 //const FIVE_MIN = 1000 * 60 * 5;
-const FIVE_MIN = 1000 * 60 * 60;
+const FIVE_MIN = 1000 * 60 * 30;
 
 //waitEveryFive();
 
@@ -214,7 +224,13 @@ async function waitEveryFive() {
     const name = itemList[i].product_name;
     const url = itemList[i].product_url;
 
-    const newData = await ScrapeItem(url, name);
+    let newData;
+    try {
+      newData = await ScrapeItem(url, name);
+    } catch (error) {
+      console.log(error);
+    }
+
     console.log("-----ITEM RECIEVED SUCCESS------");
     console.log(newData);
 
@@ -225,14 +241,14 @@ async function waitEveryFive() {
       } else {
         // Code here if scrape SUCEED
         console.log("success");
-        let scrapedPrice = newData.product_price;
-        let previousPrice = itemList[i].product_price;
+        let scrapedPrice = Number(newData.product_price);
+        let previousPrice = Number(itemList[i].product_price);
         if (scrapedPrice !== previousPrice) {
           //if prices are different do this
           //send email
           SendMail(
             `Price change for: ${name}`,
-            `The price for the ${name} has changed it's price to: PHP${scrapedPrice} from a previous price of: PHP${previousPrice}. Here is the link tot he item: ${url}`
+            `The price for the ${name} has changed it's price to: PHP${scrapedPrice} from a previous price of: PHP${previousPrice}. Here is the item URL: ${url}`
           );
           console.log("PRICE IS DIFFERENT: SENDING ITEM");
           //put price in database
