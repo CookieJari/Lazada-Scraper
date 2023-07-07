@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:8080/create";
+const apiUrl = "https://bb64-112-209-226-141.ngrok-free.app/create";
 testApi = "https://api.github.com/users/cookiejari";
 
 var sub = document.getElementById("sub");
@@ -8,7 +8,11 @@ sub.onclick = async function () {
     if (document.getElementById("link").checkValidity()) {
       let link = document.getElementById("link").value;
       const userInputs = { name: name, url: link };
+      console.log(userInputs);
+      // put in message screen status
+      document.querySelector(".message").innerText = "loading";
       let response = await sendItem(apiUrl, userInputs);
+      document.querySelector(".message").innerText = response.message;
       return response;
     } else {
       const linkInput = document.getElementById("link");
