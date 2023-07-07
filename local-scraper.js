@@ -25,8 +25,6 @@ const getPrice = async (url) => {
       return { price: "0", image: "missing" };
     }
   });
-
-  console.log(item);
   //page.close();
   return item;
 };
