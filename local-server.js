@@ -41,26 +41,27 @@ app.post("/create", async (req, res) => {
     //THIS IS LOGIC FOR CREATE ITEM
 
     //check if item is already in db
+    /*
     let sqlUrl = "http://146.190.85.152:3000/products/historical_prices";
     const itemHistory = await sendItem(sqlUrl, req.body);
     console.log(itemHistory);
-    //let latest = itemHistory[0].product_url
 
-    //scrape the item
-    /*
-      let trackedItem = await getResponse(req);
-      console.log(trackedItem);
+    //let latest = itemHistory[0].product_url
     */
 
+    //scrape the item
+
+    let trackedItem = await ScrapeItem(req.body.url, req.body.name);
+    console.log(trackedItem);
+
     //send item to database
-    /*
+
     let sqlUrl = "http://146.190.85.152:3000/products";
     let response = await sendItem(sqlUrl, trackedItem);
     console.log("sending item");
-    */
 
     //put trackedItem in database
-    //res.send(response);
+    res.send(response);
   }
 });
 
@@ -113,6 +114,8 @@ async function getItem(apiUrl) {
   return data;
 }
 
+// ------ CALLS TO THE DATABASE AND SRAPER ------
+
 //function to POST request the database
 async function sendItem(apiUrl, item) {
   console.log(item);
@@ -131,9 +134,7 @@ async function sendItem(apiUrl, item) {
 }
 
 //this function gets the item price
-const getResponse = async (req) => {
-  let url = req.body.url;
-  let itemName = req.body.name;
+const ScrapeItem = async (url, itemName) => {
   let resp = await getPrice(url);
 
   // get price and change to int
@@ -141,11 +142,15 @@ const getResponse = async (req) => {
 
   if (itemPrice === 0) {
     console.log("error scraping: captcha gang");
-    return { message: "error scraping: captcha gang" };
+    return {
+      message: "error scraping: captcha gang",
+      name: itemName,
+      url: url,
+    };
   } else {
     let itemImage = resp.image;
-    console.log("RESPONSE:");
-    console.log(resp);
+    console.log("Scrape Success:");
+    //console.log(resp);
 
     return {
       product_name: itemName,
@@ -155,3 +160,63 @@ const getResponse = async (req) => {
     };
   }
 };
+
+// ------ SCRAPE EVERY X MINS ------
+//This is 5 mins
+//const FIVE_MIN = 1000 * 60 * 5;
+const FIVE_MIN = 1000 * 60 * 60;
+waitEveryFive();
+
+async function waitEveryFive() {
+  const msToNextRounded5Min = FIVE_MIN - (Date.now() % FIVE_MIN);
+
+  //get the item list
+  let sqlUrl = "http://146.190.85.152:3000/products";
+  const itemList = await getItem(sqlUrl);
+  //console.log(itemList);
+
+  //loop through the list
+  for (let i = 0; i < itemList.length; i++) {
+    const name = itemList[i].product_name;
+    const url = itemList[i].product_url;
+
+    const newData = await ScrapeItem(url, name);
+    console.log("-----ITEM RECIEVED SUCCESS------");
+    console.log(newData);
+
+    try {
+      if (newData.product_price === undefined) {
+        // Code here if scrape FAILS
+        console.log("------undefined FAILURE----");
+      } else {
+        // Code here if scrape SUCEED
+        console.log("success");
+        let scrapedPrice = newData.product_price;
+        let previousPrice = itemList[i].product_price;
+        if (scrapedPrice !== previousPrice) {
+          //if prices are different do this
+          //send email
+          SendMail(
+            `Price change for: ${name}`,
+            `The price for the ${name} has changed it's price to: PHP${scrapedPrice} from a previous price of: PHP${previousPrice}. Here is the link tot he item: ${url}`
+          );
+          console.log("PRICE IS DIFFERENT: SENDING ITEM");
+          //put price in database
+          let sqlUrl = "http://146.190.85.152:3000/products";
+          let response = await sendItem(sqlUrl, newData);
+          console.log("sending item");
+        }
+      }
+    } catch (error) {
+      console.log(e);
+    }
+  }
+
+  console.log("PRINTING ITEM LIST DONE");
+  console.log(`Ayo waiting ${msToNextRounded5Min}ms. till 5 mins.`);
+
+  setTimeout(() => {
+    console.log("Its been 5 mins now");
+    waitEveryFive();
+  }, msToNextRounded5Min);
+}
