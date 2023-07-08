@@ -15,7 +15,21 @@
   flex-direction: column;
   align-items: center;
   align-content: center;
-  gap: 60px;
+  gap: 2.5em;
+}
+.header {
+  margin-top: 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+}
+.logo-div {
+  height: 2.5em;
+  width: 2.5em;
+  background-image: url(As-export.png);
+  background-size: cover;
+  background-position: center;
 }
 
 .main-grid {
@@ -25,11 +39,12 @@
   width: 100%;
 }
 
-.containers {
+h1 {
+  color: rgba(15, 20, 109, 1);
 }
 .link-to-item {
-  border-bottom: 1px solid black;
-  box-shadow: 0px 5px 5px #25252541;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.863);
+  box-shadow: 0px 5px 4px #2525254b;
   display: flex;
   align-items: center;
   height: 4em;
@@ -55,6 +70,7 @@
 .bottom-text {
   display: grid;
   width: 100%;
+  font-size: 0.9em;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr;
   text-align: left;
@@ -63,8 +79,11 @@
 
 .pricesg {
   color: green;
+  font-size: 1em;
+  font-weight: 500;
 }
 .pricesr {
+  font-size: 1em;
   color: red;
 }
 .dates {
