@@ -1,4 +1,4 @@
-const apiUrl = "https://bb64-112-209-226-141.ngrok-free.app/create";
+const apiUrl = " https://2021-112-209-226-141.ngrok-free.app/create";
 testApi = "https://api.github.com/users/cookiejari";
 
 var sub = document.getElementById("sub");
